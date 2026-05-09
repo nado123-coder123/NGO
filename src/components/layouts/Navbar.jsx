@@ -40,6 +40,7 @@ const Navbar = () => {
         <ul className="hidden md:flex space-x-8 font-semibold text-sm tracking-wide text-slate-600 dark:text-slate-300">
           <li><Link to="/" className={linkClass("/")}>Home</Link></li>
           <li><Link to="/about" className={linkClass("/about")}>About</Link></li>
+          <li><Link to="/items" className={linkClass("/items")}>Items</Link></li>
           <li><Link to="/contact" className={linkClass("/contact")}>Contact</Link></li>
         </ul>
 

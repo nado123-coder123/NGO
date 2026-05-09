@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const ContactForm = () => {
   return (
     <section className="py-24 bg-slate-50 dark:bg-slate-950 relative">
@@ -15,12 +17,7 @@ const ContactForm = () => {
             </div>
           </div>
 
-          <form action="https://formspree.io/f/xyknblbw" method="POST">
-            <div className="flex items-center p-4 mb-4 text-sm text-indigo-800 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-800 rounded-lg bg-indigo-50 dark:bg-indigo-950/50" role="alert">
-              <svg className="flex-shrink-0 inline w-4 h-4 me-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/></svg>
-              <div><span className="font-medium">Information:</span> Response times may vary depending on inquiry volume.</div>
-            </div>
-
+          <div className="flex flex-col space-y-4">
             <div className="grid md:grid-cols-2 gap-6 mb-4">
               <div>
                 <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
@@ -42,10 +39,10 @@ const ContactForm = () => {
               <textarea name="message" rows="4" required minLength="10" className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:outline-none resize-none"></textarea>
             </div>
 
-            <button type="submit" className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-800 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none w-full transition-all">
+            <Link to="/under-progress" className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-800 font-medium rounded-lg text-sm px-5 py-3 text-center transition-all shadow-lg shadow-indigo-700/30">
               Send Message
-            </button>
-          </form>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

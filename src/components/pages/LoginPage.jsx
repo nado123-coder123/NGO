@@ -2,17 +2,17 @@ import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   return (
-    <section className="flex-grow flex items-center justify-center py-20 pt-32 px-6 relative overflow-hidden min-h-screen">
+    <section className="flex items-center justify-center py-20 pt-32 px-6 relative overflow-hidden min-h-[calc(100vh-80px)]">
       <div className="absolute inset-0 bg-gradient-to-br from-violet-50 via-slate-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 -z-20"></div>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-200 dark:bg-violet-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] opacity-30 -z-10 pointer-events-none"></div>
 
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md relative z-10">
         <div className="bg-white dark:bg-slate-800 rounded-[2rem] shadow-xl shadow-slate-200/50 dark:shadow-slate-950/50 border border-slate-100 dark:border-slate-700 p-10 relative overflow-hidden">
           <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
 
           <div className="text-center mb-8">
             <div className="relative w-16 h-16 overflow-hidden bg-violet-100 dark:bg-violet-900/50 rounded-full mx-auto mb-4 ring-4 ring-violet-50 dark:ring-violet-900/30">
-              <svg className="absolute w-18 h-18 text-violet-400 -left-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
+              <svg className="absolute w-16 h-16 text-violet-400 -left-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path></svg>
             </div>
             <h3 className="text-3xl font-black text-slate-900 dark:text-white">Welcome Back</h3>
             <p className="text-slate-500 dark:text-slate-400 mt-2 text-sm">Sign in securely to your Shajar account.</p>

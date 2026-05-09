@@ -3,7 +3,6 @@ import ContactForm from "../views/contactViews/ContactForm";
 const ContactPage = () => {
   return (
     <>
-      {/* Hero */}
       <section className="relative pt-28 pb-16 lg:pt-32 lg:pb-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 overflow-hidden text-center">
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 via-white to-violet-50/50 dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950 -z-10"></div>
         <div className="absolute -top-10 -right-10 w-64 h-64 bg-indigo-100 dark:bg-indigo-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-50"></div>

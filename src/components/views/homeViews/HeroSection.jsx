@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const HeroSection = () => {
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
@@ -22,12 +24,12 @@ const HeroSection = () => {
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
-            <button className="bg-indigo-600 text-white px-8 py-4 rounded-xl hover:bg-indigo-700 shadow-[0_10px_30px_-10px_rgba(79,70,229,0.6)] hover:shadow-[0_10px_40px_-10px_rgba(79,70,229,0.8)] transform hover:-translate-y-1 transition-all font-bold text-lg">
+            <Link to="/auth/register" className="inline-block bg-indigo-600 text-white px-8 py-4 rounded-xl hover:bg-indigo-700 shadow-[0_10px_30px_-10px_rgba(79,70,229,0.6)] hover:shadow-[0_10px_40px_-10px_rgba(79,70,229,0.8)] transform hover:-translate-y-1 transition-all font-bold text-lg text-center">
               Apply for Aid
-            </button>
-            <button className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-8 py-4 rounded-xl hover:border-indigo-600 dark:hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400 transform hover:-translate-y-1 transition-all font-bold text-lg shadow-sm">
+            </Link>
+            <Link to="/under-progress" className="inline-block bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 px-8 py-4 rounded-xl hover:border-indigo-600 dark:hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-400 transform hover:-translate-y-1 transition-all font-bold text-lg shadow-sm text-center">
               Support Us
-            </button>
+            </Link>
           </div>
         </div>
 

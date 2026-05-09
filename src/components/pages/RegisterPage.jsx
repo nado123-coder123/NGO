@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
   return (
-    <section className="flex-grow flex items-center justify-center py-20 pt-32 px-6 relative overflow-hidden min-h-screen">
+    <section className="flex items-center justify-center py-20 pt-32 px-6 relative overflow-hidden min-h-[calc(100vh-80px)]">
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 via-slate-50 to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950 -z-20"></div>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-200 dark:bg-indigo-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] opacity-30 -z-10 pointer-events-none"></div>
 
-      <div className="w-full max-w-lg">
+      <div className="w-full max-w-lg relative z-10">
         <div className="bg-white dark:bg-slate-800 rounded-[2rem] shadow-xl shadow-slate-200/50 dark:shadow-slate-950/50 border border-slate-100 dark:border-slate-700 p-10 relative overflow-hidden">
           <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-indigo-500 to-blue-500"></div>
 

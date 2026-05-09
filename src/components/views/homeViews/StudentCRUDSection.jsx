@@ -3,7 +3,6 @@ import {
   getInitialStudents,
   arrayToObject,
   objectToArray,
-  recentDonors,
   MAJORS,
   UNIVERSITIES,
   STATUSES,
@@ -17,7 +16,6 @@ const StudentCRUDSection = () => {
   const [editId, setEditId] = useState(null);
   const [form, setForm] = useState({ name: "", major: "Computer Engineering", university: "Stanford", gpa: "", need: "", status: "Pending" });
 
-  // Filters
   const [filterName, setFilterName] = useState("");
   const [filterMajor, setFilterMajor] = useState("");
   const [filterUniversity, setFilterUniversity] = useState("");
@@ -27,7 +25,6 @@ const StudentCRUDSection = () => {
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
 
-  // ---- CRUD using ARRAY ----
   const addStudentArray = (student) => {
     const newStudent = { ...student, id: Date.now(), createdAt: new Date() };
     setStudents(prev => [...prev, newStudent]);
@@ -41,7 +38,6 @@ const StudentCRUDSection = () => {
     setStudents(prev => prev.filter(s => s.id !== id));
   };
 
-  // ---- CRUD using OBJECT ----
   const addStudentObject = (student) => {
     const id = Date.now();
     const newStudent = { ...student, id, createdAt: new Date() };
@@ -64,12 +60,60 @@ const StudentCRUDSection = () => {
     setStudents(objectToArray(obj));
   };
 
-  // Proxy
+  const testArrayCRUD = () => {
+    console.group("--- Testing Array CRUD ---");
+    let dummyStudents = [...students];
+    const id = Date.now();
+    const newStudent = { id, name: "Test Array", major: "Other", university: "Other", gpa: 3.5, need: 1000, status: "Pending", createdAt: new Date() };
+
+    console.log("1. CREATE (Array): Adding new student");
+    dummyStudents.push(newStudent);
+    console.log("Current Array:", dummyStudents);
+
+    console.log("2. READ (Array): Listing all students");
+    console.table(dummyStudents);
+
+    console.log("3. UPDATE (Array): Updating student name");
+    dummyStudents = dummyStudents.map(s => s.id === id ? { ...s, name: "Updated Array Name" } : s);
+    console.log("Current Array:", dummyStudents);
+
+    console.log("4. DELETE (Array): Deleting student");
+    dummyStudents = dummyStudents.filter(s => s.id !== id);
+    console.log("Final Array:", dummyStudents);
+    console.groupEnd();
+
+    alert("Array CRUD test complete! Check your browser's Developer Console (F12) for the output logs.");
+  };
+
+  const testObjectCRUD = () => {
+    console.group("--- Testing Object CRUD ---");
+    let obj = arrayToObject(students);
+    const id = Date.now();
+    const newStudent = { id, name: "Test Object", major: "Other", university: "Other", gpa: 3.5, need: 1000, status: "Pending", createdAt: new Date() };
+
+    console.log("1. CREATE (Object): Adding new student");
+    obj[id] = newStudent;
+    console.log("Current Object:", obj);
+
+    console.log("2. READ (Object): Listing all students");
+    console.table(Object.values(obj));
+
+    console.log("3. UPDATE (Object): Updating student name");
+    if (obj[id]) obj[id] = { ...obj[id], name: "Updated Object Name" };
+    console.log("Current Object:", obj);
+
+    console.log("4. DELETE (Object): Deleting student");
+    delete obj[id];
+    console.log("Final Object:", obj);
+    console.groupEnd();
+
+    alert("Object CRUD test complete! Check your browser's Developer Console (F12) for the output logs.");
+  };
+
   const addStudent = dataSource === "array" ? addStudentArray : addStudentObject;
   const updateStudent = dataSource === "array" ? updateStudentArray : updateStudentObject;
   const deleteStudentFn = dataSource === "array" ? deleteStudentArray : deleteStudentObject;
 
-  // Filtering & sorting
   const getFiltered = () => {
     let filtered = students.filter(s => {
       const matchName = s.name.toLowerCase().includes(filterName.toLowerCase());
@@ -135,11 +179,6 @@ const StudentCRUDSection = () => {
   return (
     <section id="interactive-features" className="py-24 bg-slate-50 dark:bg-slate-950 relative border-t border-slate-200 dark:border-slate-800">
       <div className="max-w-screen-xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h3 className="text-4xl font-extrabold text-slate-900 dark:text-white">Student CRUD &amp; Control Structures</h3>
-        </div>
-
-        {/* Data Source Toggle */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-lg shadow-slate-200/50 dark:shadow-slate-950/50 border border-slate-100 dark:border-slate-800 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <span className="text-lg font-bold text-slate-800 dark:text-white">Data Source:</span>
@@ -153,16 +192,30 @@ const StudentCRUDSection = () => {
           </div>
         </div>
 
-        {/* Student Applications Card */}
         <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 shadow-xl shadow-slate-200/50 dark:shadow-slate-950/50 border border-slate-100 dark:border-slate-800 mb-12">
           <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-            <h4 className="text-2xl font-bold text-slate-800 dark:text-white">Student Applications</h4>
-            <button onClick={openAdd} className="bg-indigo-600 text-white px-6 py-2.5 rounded-xl hover:bg-indigo-700 transition font-bold shadow-lg shadow-indigo-600/30 whitespace-nowrap">
-              + Add Student
+            <div className="flex items-center gap-3">
+              <h4 className="text-2xl font-bold text-slate-800 dark:text-white">Student Applications</h4>
+              <span className={`px-3 py-1 rounded-full text-xs font-bold ${dataSource === "array" ? "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300" : "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300"}`}>
+                via {dataSource === "array" ? "Array [ ]" : "Object { }"}
+              </span>
+            </div>
+            <button
+              id="add-student-btn"
+              onClick={openAdd}
+              className={`group relative px-8 py-3 rounded-2xl text-white font-bold shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5 whitespace-nowrap overflow-hidden ${dataSource === "array" ? "bg-gradient-to-r from-indigo-600 to-violet-600 shadow-indigo-600/30 hover:shadow-indigo-600/50" : "bg-gradient-to-r from-emerald-600 to-teal-600 shadow-emerald-600/30 hover:shadow-emerald-600/50"}`}
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                <svg className="w-5 h-5 transition-transform duration-300 group-hover:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4"></path></svg>
+                Add Student
+                <span className={`ml-1 px-2 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-wider ${dataSource === "array" ? "bg-white/20" : "bg-white/20"}`}>
+                  {dataSource === "array" ? "Array" : "Object"}
+                </span>
+              </span>
+              <span className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${dataSource === "array" ? "bg-gradient-to-r from-violet-600 to-indigo-600" : "bg-gradient-to-r from-teal-600 to-emerald-600"}`}></span>
             </button>
           </div>
 
-          {/* Filters */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-4 bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
             <input type="text" value={filterName} onChange={e => setFilterName(e.target.value)} placeholder="Search by Name..." className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:outline-none w-full" />
             <select value={filterMajor} onChange={e => setFilterMajor(e.target.value)} className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:outline-none w-full">
@@ -181,19 +234,17 @@ const StudentCRUDSection = () => {
             </select>
           </div>
 
-          {/* Sort */}
           <div className="flex flex-wrap items-center gap-3 mb-8 bg-slate-50 dark:bg-slate-800 p-4 rounded-2xl border border-slate-100 dark:border-slate-700">
             <label className="text-sm font-bold text-slate-600 dark:text-slate-300">Sort By:</label>
             <select value={sortBy} onChange={e => setSortBy(e.target.value)} className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-white focus:ring-2 focus:ring-indigo-400 focus:outline-none text-sm">
               {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
-            <button onClick={() => setSortOrder(p => p === "asc" ? "desc" : "asc")} className="p-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition" title="Toggle sort order">
+            <button onClick={() => setSortOrder(p => p === "asc" ? "desc" : "asc")} className="p-2 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-600 transition">
               {sortOrder === "asc" ? "↑" : "↓"}
             </button>
             <button onClick={() => { setFilterName(""); setFilterMajor(""); setFilterUniversity(""); setFilterMinGpa(""); setFilterMaxNeed(""); setFilterStatus(""); setSortBy("name"); setSortOrder("asc"); }} className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600 transition">↻ Reset</button>
           </div>
 
-          {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.length === 0 ? (
               <p className="col-span-full text-center text-slate-500 dark:text-slate-400 py-8">No students found matching your criteria.</p>
@@ -213,8 +264,12 @@ const StudentCRUDSection = () => {
                   </div>
                 </div>
                 <div className="flex space-x-3 pt-4 border-t border-slate-100 dark:border-slate-700">
-                  <button onClick={() => openEdit(student.id)} className="flex-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 py-2 rounded-xl text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition">Edit</button>
-                  <button onClick={() => handleDelete(student.id)} className="flex-1 bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 py-2 rounded-xl text-sm font-bold hover:bg-rose-100 dark:hover:bg-rose-900/50 transition">Delete</button>
+                  <button onClick={() => openEdit(student.id)} className="flex-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 py-2 rounded-xl text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-600 transition">
+                    Edit {dataSource === "array" ? "(Array)" : "(Object)"}
+                  </button>
+                  <button onClick={() => handleDelete(student.id)} className="flex-1 bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 py-2 rounded-xl text-sm font-bold hover:bg-rose-100 dark:hover:bg-rose-900/50 transition">
+                    Delete {dataSource === "array" ? "(Array)" : "(Object)"}
+                  </button>
                 </div>
               </div>
             ))}
@@ -222,7 +277,6 @@ const StudentCRUDSection = () => {
         </div>
       </div>
 
-      {/* Modal */}
       {modalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
           <div className="bg-white dark:bg-slate-800 rounded-[2rem] p-8 max-w-lg w-full shadow-2xl relative">

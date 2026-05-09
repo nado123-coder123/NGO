@@ -1,6 +1,3 @@
-// ============================================================================
-// Student Data Module (Array-based CRUD)
-// ============================================================================
 const initialStudents = [
   { id: 1, name: "Amira K.", major: "Computer Engineering", university: "Stanford", gpa: 3.8, need: 15000, status: "Approved", createdAt: new Date("2026-01-15") },
   { id: 2, name: "Omar H.", major: "Medicine", university: "Harvard", gpa: 3.9, need: 25000, status: "Pending", createdAt: new Date("2026-01-20") },
@@ -19,9 +16,6 @@ export const recentDonors = [
 export const getInitialStudents = () =>
   initialStudents.map(s => ({ ...s }));
 
-// ============================================================================
-// Object-based CRUD helpers (O(1) lookups)
-// ============================================================================
 export const arrayToObject = (arr) => {
   const obj = {};
   arr.forEach(s => { obj[s.id] = { ...s }; });

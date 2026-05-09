@@ -1,10 +1,15 @@
-import HeroSection from "../views/homeViews/HeroSection";
-import MissionSection from "../views/homeViews/MissionSection";
-import HowItWorksSection from "../views/homeViews/HowItWorksSection";
-import StatsCounter from "../views/homeViews/StatsCounter";
-import ImpactCounter from "../views/homeViews/ImpactCounter";
-import StudentCRUDSection from "../views/homeViews/StudentCRUDSection";
+import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import HeroSection from "../../components/views/homeViews/HeroSection";
+import MissionSection from "../../components/views/homeViews/MissionSection";
+import HowItWorksSection from "../../components/views/homeViews/HowItWorksSection";
+import StudentCRUDSection from "../../components/views/homeViews/StudentCRUDSection";
+
+const ngo = "Shajar Hope Alliance";
+const volunteers = 100;
+const acceptingDonations = true;
+const programs = ["Scholarships", "Qarz-e-Hasna", "Community Support"];
+const founder = { name: "Nadir Latifbutt", city: "Lahore" };
 
 const HomePage = () => {
   return (
@@ -12,8 +17,6 @@ const HomePage = () => {
       <HeroSection />
       <MissionSection />
       <HowItWorksSection />
-      <StatsCounter />
-      <ImpactCounter />
 
       <section className="py-24 bg-slate-50 dark:bg-slate-950">
         <div className="max-w-screen-xl mx-auto px-6">
@@ -71,10 +74,10 @@ const HomePage = () => {
         <div className="max-w-2xl mx-auto">
           <h3 className="text-3xl font-extrabold mb-4">Stay updated with our mission</h3>
           <p className="text-indigo-200 mb-8">Sign up for our monthly newsletter to see the incredible impact your donations are making across the globe.</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <form className="flex flex-col sm:flex-row gap-3 justify-center">
             <input type="email" placeholder="Enter your email address" required className="px-6 py-4 rounded-xl text-slate-900 w-full sm:w-96 focus:outline-none focus:ring-4 focus:ring-indigo-400" />
-            <Link to="/under-progress" className="bg-slate-900 text-white px-8 py-4 rounded-xl hover:bg-slate-800 transition font-bold whitespace-nowrap">Subscribe</Link>
-          </div>
+            <button type="submit" className="bg-slate-900 text-white px-8 py-4 rounded-xl hover:bg-slate-800 transition font-bold whitespace-nowrap">Subscribe</button>
+          </form>
         </div>
       </section>
 

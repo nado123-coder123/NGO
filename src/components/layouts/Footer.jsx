@@ -19,8 +19,8 @@ const Footer = () => {
         <div>
           <h4 className="text-white font-bold mb-4 uppercase tracking-wider text-sm">Legal</h4>
           <div className="flex flex-col space-y-3 text-sm">
-            <a href="#" className="hover:text-white transition">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition">Terms of Service</a>
+            <Link to="/under-progress" className="hover:text-white transition">Privacy Policy</Link>
+            <Link to="/under-progress" className="hover:text-white transition">Terms of Service</Link>
           </div>
         </div>
       </div>
