@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { useAuth } from "../../../context/AuthContext";
 
 const CreateItem = () => {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     title: "",
@@ -21,6 +23,8 @@ const CreateItem = () => {
     try {
       await addDoc(collection(db, "items"), {
         ...form,
+        createdBy: currentUser.uid,
+        createdByEmail: currentUser.email,
         createdAt: new Date()
       });
       navigate("/items");

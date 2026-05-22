@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { useAuth } from "../../../context/AuthContext";
 
 const EditItem = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { currentUser, isAdmin } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
@@ -22,6 +24,11 @@ const EditItem = () => {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const data = docSnap.data();
+          if (!isAdmin && data.createdBy !== currentUser?.uid) {
+            alert("You do not have permission to edit this item.");
+            navigate("/items");
+            return;
+          }
           setForm({
             title: data.title || "",
             category: data.category || "Event",
@@ -39,7 +46,7 @@ const EditItem = () => {
       }
     };
     fetchItem();
-  }, [id, navigate]);
+  }, [id, navigate, currentUser, isAdmin]);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 

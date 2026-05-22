@@ -2,10 +2,12 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { useAuth } from "../../../context/AuthContext";
 
 const ViewItem = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { currentUser, isAdmin } = useAuth();
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -27,6 +29,11 @@ const ViewItem = () => {
     };
     fetchItem();
   }, [id]);
+
+  const canModify = () => {
+    if (!item || !currentUser) return false;
+    return isAdmin || item.createdBy === currentUser.uid;
+  };
 
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this item?")) {
@@ -53,26 +60,32 @@ const ViewItem = () => {
           </span>
         </div>
         
-        <div className="flex items-center gap-2 mb-8">
+        <div className="flex items-center gap-2 mb-4">
           <span className="text-slate-500 dark:text-slate-400 font-semibold">Status:</span>
           <span className={`px-3 py-1 rounded-full text-xs font-bold ${item.status === 'Active' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' : 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300'}`}>
             {item.status}
           </span>
         </div>
+
+        {item.createdByEmail && (
+          <p className="text-sm text-slate-400 dark:text-slate-500 mb-8">Created by: {item.createdByEmail}</p>
+        )}
         
         <div className="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 mb-12">
           <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">Description</h3>
           <p className="leading-relaxed whitespace-pre-wrap">{item.description}</p>
         </div>
 
-        <div className="flex gap-4 pt-8 border-t border-slate-200 dark:border-slate-700">
-          <Link to={`/items/${item.id}/edit`} className="flex-1 text-center bg-indigo-600 text-white py-3 rounded-xl font-bold shadow-lg shadow-indigo-600/30 hover:bg-indigo-700 transition transform hover:-translate-y-0.5">
-            Edit Item
-          </Link>
-          <button onClick={handleDelete} className="flex-1 bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 py-3 rounded-xl font-bold border border-rose-200 dark:border-rose-900/50 hover:bg-rose-100 dark:hover:bg-rose-900/40 transition">
-            Delete Item
-          </button>
-        </div>
+        {canModify() && (
+          <div className="flex gap-4 pt-8 border-t border-slate-200 dark:border-slate-700">
+            <Link to={`/items/${item.id}/edit`} className="flex-1 text-center bg-indigo-600 text-white py-3 rounded-xl font-bold shadow-lg shadow-indigo-600/30 hover:bg-indigo-700 transition transform hover:-translate-y-0.5">
+              Edit Item
+            </Link>
+            <button onClick={handleDelete} className="flex-1 bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 py-3 rounded-xl font-bold border border-rose-200 dark:border-rose-900/50 hover:bg-rose-100 dark:hover:bg-rose-900/40 transition">
+              Delete Item
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
