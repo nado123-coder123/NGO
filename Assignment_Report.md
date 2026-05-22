@@ -1,7 +1,7 @@
 # Application Deployment Report
 
 **Live URL**: [https://ngo-smart-aid.vercel.app/](https://ngo-smart-aid.vercel.app/)
-**GitHub Repository**: [https://github.com/70147071-blip/NGO-Smart-aid](https://github.com/70147071-blip/NGO-Smart-aid)
+**GitHub Repository**: [https://github.com/nado123-coder123/NGO](https://github.com/nado123-coder123/NGO)
 
 ## Development Tasks Completed
 
