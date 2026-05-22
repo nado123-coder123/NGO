@@ -9,7 +9,7 @@ import {
   onAuthStateChanged,
   updateProfile,
 } from "firebase/auth";
-import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, getDoc, deleteDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db, googleProvider } from "../firebase/config";
 
 const AuthContext = createContext(null);
@@ -93,7 +93,13 @@ export const AuthProvider = ({ children }) => {
 
   const deleteAccount = async () => {
     if (currentUser) {
+      const uid = currentUser.uid;
       await deleteUser(currentUser);
+      try {
+        await deleteDoc(doc(db, "users", uid));
+      } catch (err) {
+        console.error("Failed to delete user document from Firestore:", err);
+      }
     }
   };
 
